@@ -1,4 +1,4 @@
-package lab2.zadacha2;
+package lab2.zad2;
 import java.util.Scanner;
 class DLLNode<E> {
     protected E element;

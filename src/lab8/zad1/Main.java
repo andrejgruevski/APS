@@ -1,4 +1,4 @@
-package lab8;
+package lab8.zad1;
 
 import java.util.Scanner;
 

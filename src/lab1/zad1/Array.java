@@ -4,7 +4,7 @@
 //
 //        Излез: Низата пред и после направената трансформација.
 
-package lab1;
+package lab1.zad1;
 
 
 import java.util.*;

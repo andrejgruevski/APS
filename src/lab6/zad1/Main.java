@@ -1,6 +1,5 @@
-package lab6;
+package lab6.zad1;
 
-import java.util.Map;
 //import java.util.Scanner;
 //
 //class Person {

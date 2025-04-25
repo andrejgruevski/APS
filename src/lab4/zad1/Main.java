@@ -1,4 +1,4 @@
-package lab4;
+package lab4.zad1;
 
 import java.util.Scanner;
 
@@ -40,6 +40,7 @@ public class Main {
                 desno = sredina - 1;
             }
         }
-    return -1;
+        return -1;
 
-}}
+    }}
+

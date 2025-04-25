@@ -1,4 +1,4 @@
-package lab5;
+package lab5.zad1;
 
 import java.util.Scanner;
 import java.util.Stack;

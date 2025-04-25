@@ -1,4 +1,4 @@
-package lab10;
+package lab10.zad1;
 
 import java.util.*;
 

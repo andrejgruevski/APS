@@ -1,7 +1,8 @@
-package lab7;
+package lab7.zad2;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.*;
-
 interface Tree<E> {
     // //////////Accessors ////////////
 
@@ -32,7 +33,6 @@ interface Tree<E> {
 
     }
 }
-
 class SLLTree<E> implements Tree<E> {
 
     // SLLNode is the implementation of the Node interface
@@ -226,39 +226,61 @@ class SLLTree<E> implements Tree<E> {
         }
     }
 }
-
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String []lines = sc.nextLine().split(" ");
-        int n = Integer.parseInt(lines[0]) + Integer.parseInt(lines[1]);
-        SLLTree<Integer>tree = new SLLTree<Integer>();
-        Map<Integer, Tree.Node<Integer>> nodes = new HashMap<>();
-        for(int i = 0; i<n; i++){
-            String[] line = sc.nextLine().split(" ");
-            if(Objects.equals(line[0], "root")){
-                tree.makeRoot(Integer.parseInt(line[1]));
-                Tree.Node<Integer> rootNode = tree.root;
-                nodes.put(Integer.parseInt(line[1]), rootNode);
-            } else if(Objects.equals(line[0], "add")){
-                Tree.Node<Integer> parentNode = nodes.get(Integer.parseInt(line[1]));
-                Tree.Node<Integer> childNode = tree.addChild(parentNode, Integer.parseInt(line[2]));
-                nodes.put(Integer.parseInt(line[2]), childNode);
-            } else {
-                Tree.Node<Integer> nodeSubTree = nodes.get(Integer.parseInt(line[1]));
-                int leafCount = countLeaves(tree, nodeSubTree);
-                System.out.println(leafCount);
+        int n = sc.nextInt(); // number of nodes
+        int q = sc.nextInt(); // number of queries
+
+        SLLTree<String> tree = new SLLTree<>();
+        Map<String, SLLTree.SLLNode<String>> nodes = new HashMap<>();
+
+
+        for (int i = 0; i < n + q; i++) {
+            String command = sc.next();
+
+            if (command.equals("root")) {
+
+                String rootName = sc.next();
+                tree.makeRoot(rootName);
+                nodes.put(rootName, (SLLTree.SLLNode<String>) tree.root());
+            }
+            else if (command.equals("add")) {
+                String parentName = sc.next();
+                String childName = sc.next();
+                String direction = sc.next(); // LEFT or RIGHT
+
+                SLLTree.SLLNode<String> parentNode = nodes.get(parentName);
+                SLLTree.SLLNode<String> childNode = (SLLTree.SLLNode<String>) tree.addChild(parentNode, childName);
+
+
+                nodes.put(childName, childNode);
+            }
+            else if (command.equals("ask")) {
+                String nodeName = sc.next();
+                SLLTree.SLLNode<String> node = nodes.get(nodeName);
+
+
+                int maxDepth = getMaxDepth(node);
+                System.out.println(maxDepth);
             }
         }
     }
-    public static <E> int countLeaves(SLLTree<E> tree, Tree.Node<E> node){
-        int count = 0;
-        if (tree.childCount(node) == 0) {
-            return 1;
+
+
+    public static int getMaxDepth(SLLTree.SLLNode<String> node) {
+        if (node == null) {
+            return 0;
         }
-        for(Tree.Node<E> childNode : tree.childrenNodes(node)){
-            count += countLeaves(tree, childNode);
+
+        int maxDepth = 0;
+        SLLTree.SLLNode<String> child = node.firstChild;
+
+        while (child != null) {
+            maxDepth = Math.max(maxDepth, getMaxDepth(child));
+            child = child.sibling;
         }
-        return count;
+
+        return maxDepth + 1;
     }
 }
