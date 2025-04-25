@@ -16,6 +16,7 @@ class CFG{
 }
 public class main {
     public static void main(String[] arr) {
-      
+      int[] arrey = {12, 35,1,14,34,1};
+        System.out.println(CFG.getSecondLargest(arrey));
     }
 }

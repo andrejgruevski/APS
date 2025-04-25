@@ -1,4 +1,4 @@
-package listi;
+package array.zad1;
 import java.util.Scanner;
 class SLLNode<E>{
     E element;
