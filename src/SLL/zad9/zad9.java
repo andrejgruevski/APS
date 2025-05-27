@@ -1,6 +1,5 @@
-package SLL.zad7;
+package SLL.zad9;
 
-import java.awt.event.WindowStateListener;
 import java.util.Scanner;
 
 class SLLNode<E> {
@@ -179,39 +178,45 @@ class SLL<E> {
         }
     }
 }
-
-//    Дадена е еднострано поврзана листа. Да се напише функција која ќе ги удвои елементите
-//        кои во data полето имаат вредност x (до нив ќе вметне нов јазел со иста информација).
-//        Како резултат функцијата да врати колку нови јазли биле вметнати.
-//        Пр. →3→4→7→6→4→7→3→2; 4
-//       3→4→4→7→6→4→4→7→3→2; вметнати 2 нови јазли
-public class zad7 {
-
-        public static int zad7(SLL<Integer> lista,int x) {
+//    Дадена е еднострано поврзана листа која содржи едноцифрени броеви и меѓу нив е -1. Да се модифицира листата така што
+//    ќе се формираат броеви од тие цифри се додека не се стигне до бројот -1. Кога ќе се стигне до -1, се брише и се
+//    продолжува со формирањето на броевите од наредните цифри
+//
+//    Влез:
+//   14
+//   1 2 3 -1 5 -1 6 7 4 8 9 -1 9 8
+//    Излез:
+//    123 5 67489 98
+public class zad9 {
+    public static SLL<Integer> zad9(SLL<Integer> lista){
         SLLNode<Integer> iterator = lista.getFirst();
-        int counter = 0;
+        int number = 0; // tuka ke go kreirame brojot
 
         while (iterator != null){
-            if (iterator.element.equals(x)){
-                lista.insertBefore(x, iterator);
-                counter++;
+            if (iterator.element != -1){
+                number = number * 10 + iterator.element; // se lepat cifrite kako 0 * 10 + 1 = 1, 1 * 10 + 2 = 12...;
+                lista.delete(iterator);
+            }else {
+                lista.insertBefore(number, iterator);
+                lista.delete(iterator);
+                number = 0;
             }
-
-            iterator = iterator.succ;
+            iterator= iterator.succ;
         }
+        lista.insertLast(number);
 
-        System.out.println(lista);
-        return counter;
+        return lista;
+
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         SLL<Integer> lista = new SLL<>();
-
         int n = sc.nextInt();
-        for (int i = 0; i<n; i++){
+
+        for (int i = 0; i <n; i++){
             lista.insertLast(sc.nextInt());
         }
-        int x = sc.nextInt();
-        System.out.println(zad7(lista,x));
+
+        System.out.println(zad9(lista));
     }
 }

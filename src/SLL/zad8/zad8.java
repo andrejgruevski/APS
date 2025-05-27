@@ -1,7 +1,7 @@
-package SLL.zad7;
+package SLL.zad8;
 
-import java.awt.event.WindowStateListener;
 import java.util.Scanner;
+import java.util.NoSuchElementException;
 
 class SLLNode<E> {
     protected E element;
@@ -179,27 +179,26 @@ class SLL<E> {
         }
     }
 }
+//    Дадена е еднострано поврзана листа. Да се напише функција која ќе ги избрише сите
+//        повеќекратни елементи од листата (при секоја појава на два соседни елементи со иста
+//        информација едниот треба да се избрише). Како резултат функцијата да врати колку
+//        јазли биле избришани.
 
-//    Дадена е еднострано поврзана листа. Да се напише функција која ќе ги удвои елементите
-//        кои во data полето имаат вредност x (до нив ќе вметне нов јазел со иста информација).
-//        Како резултат функцијата да врати колку нови јазли биле вметнати.
-//        Пр. →3→4→7→6→4→7→3→2; 4
-//       3→4→4→7→6→4→4→7→3→2; вметнати 2 нови јазли
-public class zad7 {
-
-        public static int zad7(SLL<Integer> lista,int x) {
+//        n = 8
+//        Пр. 3→4→4→7→6→4→4→4→7→3→2;
+//        →3→4→7→6→4→7→3→2; избришани 3 јазли
+public class zad8 {
+    public static int zad8(SLL<Integer> lista){
         SLLNode<Integer> iterator = lista.getFirst();
         int counter = 0;
 
-        while (iterator != null){
-            if (iterator.element.equals(x)){
-                lista.insertBefore(x, iterator);
+        while (iterator.succ != null) {
+            if (iterator.element.equals(iterator.succ.element)) {
+                lista.delete(iterator);
                 counter++;
             }
-
             iterator = iterator.succ;
         }
-
         System.out.println(lista);
         return counter;
     }
@@ -207,11 +206,12 @@ public class zad7 {
         Scanner sc = new Scanner(System.in);
         SLL<Integer> lista = new SLL<>();
 
-        int n = sc.nextInt();
+        int n = sc.nextInt();;
+
         for (int i = 0; i<n; i++){
             lista.insertLast(sc.nextInt());
         }
-        int x = sc.nextInt();
-        System.out.println(zad7(lista,x));
+
+        System.out.println(zad8(lista));
     }
 }
