@@ -1,6 +1,6 @@
 package SLL.zad10;
 import java.util.Scanner;
-import java.util.WeakHashMap;
+
 
 class Card {
     private int id;
