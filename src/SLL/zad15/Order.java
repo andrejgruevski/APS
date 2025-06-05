@@ -1,4 +1,7 @@
 package SLL.zad15;
+
+import java.util.Scanner;
+
 class SLLNode<E> {
     protected E element;
     protected SLLNode<E> succ;
@@ -175,6 +178,36 @@ class SLL<E> {
         }
     }
 }
+class Orderr{
+    private int id;
+    private int product;
+    private int priority;
+
+    public Orderr(int id, int product, int priority) {
+        this.id = id;
+        this.product = product;
+        this.priority = priority;
+    }
+    public int getId() {
+        return id;
+    }
+    public int getProduct() {
+        return product;
+    }
+    public int getPriority() {
+        return priority;
+    }
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+    public void setProduct(int product) {
+        this.product = product;
+    }
+    @Override
+    public String toString() {
+        return String.valueOf(id);
+    }
+}
 
 //    Во рамки на една фабрика се користи систем за управуване со нарачки. За секоjа нарачка се чува податок за: іd на нарачката
 //    (int id), продукт. (int product), како и приоритет (Int priority).
@@ -200,4 +233,41 @@ class SLL<E> {
 //        Во првиот ред іd на сите нарачки од Аctive листата
 //        Во вториот ред на id сите нарачки on Shipping листата
 public class Order {
+
+    public static void orders(SLL<Orderr> active, SLL<Orderr> shipping){
+        SLLNode<Orderr> activeIterator = active.getFirst().succ;
+        SLLNode<Orderr> najprioritna = active.getFirst();
+
+        while (activeIterator != null) {
+            if (activeIterator.element.getPriority() < najprioritna.element.getPriority()){
+                najprioritna = activeIterator;
+            }
+            activeIterator = activeIterator.succ;
+        }
+        shipping.insertLast(active.delete(najprioritna));
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        SLL<Orderr> active = new SLL<Orderr>();
+        SLL<Orderr> shipping  = new SLL<Orderr>();
+
+        int n = Integer.parseInt(sc.nextLine());
+        int m = Integer.parseInt(sc.nextLine());
+
+        for (int i = 0; i < n; i++) {
+            String line = sc.nextLine();
+            String[] parts = line.split("\\s+");
+            active.insertLast(new Orderr(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2])));
+        }
+        for (int i = 0; i < m; i++) {
+            String line = sc.nextLine();
+            String[] parts = line.split("\\s+");
+            shipping.insertLast(new Orderr(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2])));
+        }
+
+        orders(active,shipping);
+        System.out.println(active);
+        System.out.println(shipping);
+
+    }
 }
