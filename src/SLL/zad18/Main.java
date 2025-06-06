@@ -1,4 +1,4 @@
-package SLL.zad17;
+package SLL.zad18;
 
 import java.util.Scanner;
 
@@ -178,33 +178,36 @@ class SLL<E> {
         }
     }
 }
-//Дадена е еднострана поврзана листа чии што јазли содржат по еден String. Дополнително, даден е и уште еден природен број L. Од дадената листа потребно е да се избрише секој јазел којшто содржи String со должина помала од L.
+//Дадена е еднострана поврзана листа чии што јазли содржат по еден String. Дополнително, даден е и уште еден природен број L. Во дадената листа после секој јазол којшто содржи String со должина L да се вметне нов јазол со вредност "Target".
 //
 //Влез: Во првиот ред од влезот е даден бројот на елементи во листата - N, па во следните N редови се дадени самите елементи (String-ови) од листата. На крај, во последниот ред е даден бројот L.
 //
 //Излез: На излез треба да се испечати листата пред и после промената.
 public class Main {
-    public static void delete(SLL<String> lista, int l){
-        SLLNode<String > iterator = lista.getFirst();
+    public static void insertNode(SLL<String> lista, int l){
+        SLLNode<String> iterator = lista.getFirst();
 
         while (iterator != null) {
-            if (iterator.element.length() < l){
-                lista.delete(iterator);
+            if (iterator.element.length() == l){
+                lista.insertAfter("Target", iterator);
+                iterator = iterator.succ;
             }
-          iterator = iterator.succ;
+            iterator = iterator.succ;
         }
     }
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        SLL<String> lista = new SLL<>();
 
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        SLL<String> lista =  new SLL<String>();
         int n = sc.nextInt();
+
         for (int i = 0; i < n; i++) {
             lista.insertLast(sc.next());
         }
         int l = sc.nextInt();
         System.out.println(lista);
-        delete(lista,l);
+        insertNode(lista,l);
         System.out.println(lista);
 
     }
