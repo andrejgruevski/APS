@@ -1,4 +1,4 @@
-package DLL.zad2;
+package DLL.zad3;
 
 import java.util.Scanner;
 
@@ -190,63 +190,57 @@ class DLL<E> {
         }
     }
 }
-//Дадени се две сортирани двојно поврзани листи, при што, првата листа е сортирана во растечки редослед,
-// а втората е сортирана во опаѓачки редослед.
-// Да се констурира ново двојно поврзана листа којашто ќе ги содржи сите елементи од двете листи и тоа во опаѓачки редослед.
-// При решавањето на задачата не смее да се користи сортирање на листи.
+//Дадени се две двојно поврзани листи, едната сортирана по растечки редослед едната не.
+//Да се напише алгоритам кој ќе ги вметне сите јазли од втората листа во првата листа без да ја наруши нејзината подреденост.
+//Влез:
+//10
+//2 4 5 7 7 9 11 12 15 17
 
-//Input:
-//5 5
-//1 3 4 6 9
-//9 8 5 2 1
-//Output:
-//9 9 8 6 5 4 3 2 1 1
+//7
+//1 18 7 8 9 3 16
+//Излез:
+//1 2 3 4 5 7 7 7 8 9 9 11 12 15 16 17 18
+
 public class Main {
-    public static void spoi(DLL<Integer> lista1,DLL<Integer> lista2,DLL<Integer> lista3 ){
-         DLLNode<Integer> lastIterator1 = lista1.getLast();
-         DLLNode<Integer> firstIterator2 = lista2.getFirst();
+    public static void mergeList(DLL<Integer> lista1, DLL<Integer> lista2){
+        DLLNode<Integer> iterator2 = lista2.getFirst();
 
-         while ((firstIterator2 != null) && (lastIterator1 !=null)) {
-             if (firstIterator2.element == lastIterator1.element) {
-                 lista3.insertLast(lastIterator1.element);
-                 lista3.insertLast(firstIterator2.element);
-                 firstIterator2 = firstIterator2.succ;
-                 lastIterator1 = lastIterator1.pred;
-                 continue;
-             }
-             if (lastIterator1.element > firstIterator2.element) {
-                 lista3.insertLast(lastIterator1.element);
-                 lastIterator1 = lastIterator1.pred;
-             } else {
-                 lista3.insertLast(firstIterator2.element);
-                 firstIterator2 = firstIterator2.succ;
-             }
-         }
-         while (firstIterator2 != null) {
-             lista3.insertLast(firstIterator2.element);
-             firstIterator2 = firstIterator2.succ;
-         }
-         while (lastIterator1 != null) {
-             lista3.insertLast(lastIterator1.element);
-             lastIterator1 = lastIterator1.pred;
-         }
+        while (iterator2 != null){
+            DLLNode<Integer> segashen = lista1.getFirst();
+            boolean flag = true;
+
+            while (segashen!=null){
+                if (segashen.element > iterator2.element){
+                    lista1.insertBefore(iterator2.element, segashen);
+                    lista2.delete(iterator2);
+                    flag = false;
+                    break;
+                }
+                segashen = segashen.succ;
+            }
+            if (flag){
+                lista1.insertLast(iterator2.element);
+            }
+            iterator2 = iterator2.succ;
+        }
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        DLL<Integer> lista = new DLL<Integer>();
-        DLL<Integer> lista1 = new DLL<Integer>();
+        DLL<Integer> lista1 = new DLL<>();
+        int n= sc.nextInt();;
 
-        int n = sc.nextInt();
+        DLL<Integer> lista2 = new DLL<>();
         int m = sc.nextInt();
-        for (int i = 0; i < n; i++) {
-            lista.insertLast(sc.nextInt());
-        }
-        for (int i = 0; i < m; i++) {
+
+        for (int i = 0; i <n; i++){
             lista1.insertLast(sc.nextInt());
         }
+        for (int i=0; i<m; i++){
+            lista2.insertLast(sc.nextInt());
+        }
 
-        DLL<Integer> lista2 = new DLL<Integer>();
-        spoi(lista,lista1,lista2);
-        System.out.println(lista2);
+        mergeList(lista1,lista2);
+        System.out.println(lista1);
     }
 }
