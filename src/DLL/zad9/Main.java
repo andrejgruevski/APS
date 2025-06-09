@@ -1,4 +1,4 @@
-package DLL.zad8;
+package DLL.zad9;
 
 import java.util.Scanner;
 
@@ -172,12 +172,6 @@ class DLL<E> {
 
         return last;
     }
-    public void setFirst(DLLNode<E> node){
-        this.first = node;
-    }
-    public void setLast(DLLNode<E> node){
-        this.last = node;
-    }
 
     public void mirror() {
 
@@ -196,59 +190,33 @@ class DLL<E> {
         }
     }
 }
-//Дадена е двострано поврзана листа од цели броеви. Дополнително, даден е и уште еден природен број k. Елементите во листата треба да се ротираат k пати на лево.
+//Дадена е двострано поврзана листа од цели броеви. Дополнително, даден е и уште еден природен број k. Елементите во листата треба да се ротираат k пати на десно.
 //
 //Влез: Во првиот ред од влезот е даден бројот на елементи во листата - N, па во следните следниот ред самите елементи одделени со празно место. На крај, во последниот ред даден е и природниот број k.
 //
 //Излез: На излез треба да се испечати листата пред и после промената.
-
-public class RotateK {
-    public static void rotate(DLL<Integer> lista,int k){
-
-        DLLNode<Integer> iterator = lista.getFirst();
+public class Main {
+    public static void rotate(DLL<Integer> lista, int k){
+        DLLNode<Integer> iterator = lista.getLast();
         int counter = 0;
-        while (counter != k && iterator != null) {
+        while (counter != k &&iterator != null) {
             counter++;
-            lista.insertLast(iterator.element);
+            lista.insertFirst(iterator.element);
             lista.delete(iterator);
-            iterator = iterator.succ;
+            iterator = iterator.pred;
         }
-
-//        if (lista.getFirst() == null || lista.getFirst().succ == null || k == 0){
-//            return;
-//        }
-//        int size = lista.getSize();
-//        k = k & size;
-//        if (k == 0 ) {
-//            return;
-//        }
-//        DLLNode<Integer> current = lista.getFirst();
-//        for (int i = 0; i < k; i++) {
-//            current = current.succ;
-//
-//        }
-//        DLLNode<Integer> newFirst = current.succ;
-//        DLLNode<Integer> newLast = current;
-//
-//        newLast.succ = null;
-//        newFirst.pred = null;
-//
-//        lista.getLast().succ = lista.getFirst();
-//        lista.getFirst().pred = lista.getLast();
-//        lista.setFirst(newFirst);
-//        lista.setLast(newLast);
-
-
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();;
+        int n = sc.nextInt();
         DLL<Integer> lista = new DLL<>();
-        for (int i = 0; i < n; i++){
+
+        for (int i =0; i<n; i++){
             lista.insertLast(sc.nextInt());
         }
-        int k = sc.nextInt();
+        int k = sc.nextInt();;
 
+        System.out.println(lista);
         rotate(lista,k);
         System.out.println(lista);
     }
