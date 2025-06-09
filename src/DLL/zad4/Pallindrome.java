@@ -1,4 +1,4 @@
-package DLL.zad3;
+package DLL.zad4;
 
 import java.util.Scanner;
 
@@ -190,61 +190,46 @@ class DLL<E> {
         }
     }
 }
-//Дадени се две двојно поврзани листи, едната сортирана по растечки редослед едната не.
-//Да се напише алгоритам кој ќе ги вметне сите јазли од втората листа во првата листа без да ја наруши нејзината подреденост.
-//Влез:
-//10
-//2 4 5 7 7 9 11 12 15 17
+//Дадена е двојно поврзана листа со N јазли каде секој јазел содржи по еден карактер (буква).
+//Да се провери дали двојно поврзаната листа е палиндром: односно ако ја изминете од почеток до крај и од крај
+//до почеток, дали ќе добиете ист збор. Во првиот ред од влезот даден е бројот на јазли во листата N,
+//а во вториот ред се дадени броевите. На излез треба да се испечати 1 ако листата е палиндром, -1 ако не е.
+//
+//For example:
+//
+//Input
+//5
+//1 2 3 1 2
+//Result
+//-1
 
-//7
-//1 18 7 8 9 3 16
-//Излез:
-//1 2 3 4 5 7 7 7 8 9 9 11 12 15 16 17 18
+// 1 1 5 1 1 -> 1
+// 1 2 3 4 5 -> -1
 
-public class Main {
-    public static void mergeList(DLL<Integer> lista1, DLL<Integer> lista2){
-        DLLNode<Integer> iterator2 = lista2.getFirst();
-
-        while (iterator2 != null){
-            DLLNode<Integer> next = iterator2.succ;
-            DLLNode<Integer> segashen = lista1.getFirst();
-            boolean flag = true;
-
-            while (segashen!=null){
-                if (segashen.element >= iterator2.element){
-                    lista1.insertBefore(iterator2.element, segashen);
-
-                    flag = false;
-                    break;
-                }
-                segashen = segashen.succ;
+public class Pallindrome {
+    public static int ePalindrom (DLL<Character> lista){
+        DLLNode<Character> start = lista.getFirst();
+        DLLNode<Character> end = lista.getLast();
+        while ( start != null && end != null  && start != end ) {
+            if (!start.element.equals(end.element)) {
+                return -1;
             }
-            if (flag){
-                lista1.insertLast(iterator2.element);
-            }
-            lista2.delete(iterator2);
-            iterator2 = next;
+            start = start.succ;
+            end = end.pred;
         }
-
+        return 1;
     }
 
-
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
-        DLL<Integer> lista1 = new DLL<>();
-        int n= sc.nextInt();;
+        int n = sc.nextInt();
+        DLL<Character> lista = new DLL<>();
 
-        DLL<Integer> lista2 = new DLL<>();
-        int m = sc.nextInt();
-
-        for (int i = 0; i <n; i++){
-            lista1.insertLast(sc.nextInt());
-        }
-        for (int i=0; i<m; i++){
-            lista2.insertLast(sc.nextInt());
+        for (int i = 0; i < n; i++) {
+            lista.insertLast(sc.next().charAt(0));
         }
 
-        mergeList(lista1,lista2);
-        System.out.println(lista1);
+        System.out.println(ePalindrom(lista));
     }
 }
