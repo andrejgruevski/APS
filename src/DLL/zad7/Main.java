@@ -207,14 +207,14 @@ public class Main {
             DLLNode<Integer> posledenElement = lista.getLast();
             DLLNode<Integer> iterator = lista.getFirst();
             int suma=0;
-            DLLNode<Integer> tmp = iterator;
+            DLLNode<Integer> pozicija = iterator; // ni kazhuva na koja pozicija da go postavime posledniot element
             while (iterator != null) {
                 suma+=iterator.element;
                 if (suma <= posledenElement.element){
-                    tmp = tmp.succ;
+                    pozicija = pozicija.succ;
 
                 }else{
-                    lista.insertBefore(posledenElement.element, tmp);
+                    lista.insertBefore(posledenElement.element, pozicija);
                     lista.delete(posledenElement);
                     break;
                 }
