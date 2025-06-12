@@ -1,4 +1,5 @@
-package DLL.zad18;
+package DLL.zad20;
+
 
 import java.util.Scanner;
 
@@ -192,35 +193,15 @@ class DLL<E> {
 }
 
 public class Main {
-    public static void function(DLL<Integer> lista, int k, int m){
-        DLLNode<Integer> iterator = lista.getFirst();
-        DLLNode<Integer> prvv = null;
-        int rotate = 0;
-        while (iterator != null) {
-            if (iterator.element.equals(m)){
-                prvv = iterator;
-                break;
-            }
-            iterator = iterator.succ;
+    public static void function(DLL<Integer> lista, int k){
+        DLLNode<Integer> iterator = lista.getLast();
+        int counter  = 0;
+        while (counter !=k && iterator!=null){
+            lista.delete(iterator);
+            lista.insertFirst(iterator.element);
+            counter++;
+            iterator = iterator.pred;
         }
-        if (prvv == null){
-            System.out.println("Elementot ne postoi vo listata");
-
-        }
-        for (int i = 0; i < k; i++) {
-            if (prvv == lista.getFirst()){
-                lista.deleteFirst();
-                lista.insertLast(m);
-                prvv = lista.getLast();
-            }else{
-                DLLNode<Integer> tmp = prvv.pred;
-                lista.delete(prvv);
-                lista.insertBefore(m,tmp);
-                prvv = tmp.pred;
-            }
-        }
-
-
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -229,10 +210,10 @@ public class Main {
         for (int i = 0; i<n; i++){
             lista.insertLast(sc.nextInt());
         }
-        int m = sc.nextInt();
         int k = sc.nextInt();
         System.out.println(lista);
-        function(lista,k,m);
+        function(lista,k);
         System.out.println(lista);
     }
 }
+
