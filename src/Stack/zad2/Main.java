@@ -68,10 +68,10 @@ public class Main {
             if (Character.isDigit(str.charAt(i))) {
                 number += str.charAt(i);
             } else {
-                if (!number.isEmpty()) { // Додај проверка за празен стринг пред конверзија
+                if (!number.isEmpty()) {
                     if (operator == '+') {
                         stack.push(Integer.parseInt(number));
-                    } else if (operator == '*' && !stack.isEmpty()) { // Проверка дали стекот има елемент пред pop()
+                    } else if (operator == '*' && !stack.isEmpty()) {
                         stack.push(Integer.parseInt(number) * stack.pop());
                     }
                 }
