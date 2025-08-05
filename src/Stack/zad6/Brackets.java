@@ -51,6 +51,7 @@ class ArrayStack<E> implements Stack<E> {
         return topmost;
     }
 }
+
 interface Stack<E> {
     // Elementi na stekot se objekti od proizvolen tip.
     // Metodi za pristap:
@@ -71,23 +72,25 @@ interface Stack<E> {
     public E pop();
     // Go otstranuva i vrakja elementot shto e na vrvot na stekot.
 }
-public class  Brackets {
-    public static boolean matching (char left, char right){
-        if (left =='(' && right ==')') return true;
-        if (left =='[' && right ==']') return true;
-       return (left =='{' && right =='}');
+
+public class Brackets {
+    public static boolean matching(char left, char right) {
+        if (left == '(' && right == ')') return true;
+        if (left == '[' && right == ']') return true;
+        return (left == '{' && right == '}');
 
 
     }
-    public static boolean isCorrect(String s){
+
+    public static boolean isCorrect(String s) {
         ArrayStack<Character> brackets = new ArrayStack<>(s.length());
 
         for (int i = 0; i < s.length(); i++) {
             char current = s.charAt(i); // zemame nekoj karakter
-            if(current == '(' || current == '[' || current == '{'){
+            if (current == '(' || current == '[' || current == '{') {
                 brackets.push(current);
             }
-            if(current == ')' || current == ']' || current == '}'){
+            if (current == ')' || current == ']' || current == '}') {
                 if (brackets.isEmpty()) return false;
                 char leftBracket = brackets.pop();
                 if (!matching(leftBracket, current)) return false;
@@ -95,6 +98,7 @@ public class  Brackets {
         }
         return brackets.isEmpty();
     }
+
     public static void main(String[] args) {
         String s = "s + [(s-a) * (s - b)]";
         System.out.println(isCorrect(s));
