@@ -182,8 +182,8 @@ public class CreatingH2OMolecules {
         input = br.readLine().split(" ");
 
         ArrayQueue<String> atoms = new ArrayQueue<String>(1000);
-        for (int i = 0; i<input.length; i++){
-            atoms.enqueue(input[i]);
+        for (String s : input) {
+            atoms.enqueue(s);
         }
         System.out.println(createMolecules(atoms));
     }
