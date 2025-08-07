@@ -8,13 +8,15 @@ import java.util.*;
 public class DanceCouples {
 
     public static String secondPartner(String str){
-        if (str.equals("LM"))return "LZ";
-        else if (str.equals("LZ"))return "LM";
-        else if (str.equals("OM"))return "OZ";
-        else if (str.equals("OZ"))return "OM";
-        else if (str.equals("SM"))return "SZ";
-        else if (str.equals("SZ"))return "SM";
-        else return "";
+        return switch (str) {
+            case "LM" -> "LZ";
+            case "LZ" -> "LM";
+            case "OM" -> "OZ";
+            case "OZ" -> "OM";
+            case "SM" -> "SZ";
+            case "SZ" -> "SM";
+            default -> "";
+        };
     }
 
     public static void main(String[] args)throws IOException {
