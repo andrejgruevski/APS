@@ -54,7 +54,5 @@ public class ExamSesion {
             System.out.println(book);
         }
 
-
-
     }
 }
