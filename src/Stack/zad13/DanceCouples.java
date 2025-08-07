@@ -30,19 +30,23 @@ public class DanceCouples {
         Stack<String> L = new Stack<>(); // latino
 
         for(String token : tokens){
+
             if (token.charAt(0) == 'O'){
                 if (O.isEmpty()) O.push(token);
                 else if (!O.peek().equals(token)) O.pop();
                 else O.push(token);
+
             } else if (token.charAt(0) == 'S'){
                 if (S.isEmpty()) S.push(token);
                 else if (!S.peek().equals(token)) S.pop();
                 else S.push(token);
+
             }else if (token.charAt(0) == 'L'){
                 if (L.isEmpty()) L.push(token);
                 else if (!L.peek().equals(token)) L.pop();
                 else L.push(token);
             }
+
         }
         System.out.println(O.size() + S.size() + L.size());
         for(String token : O) System.out.println(secondPartner(token) + " ");
