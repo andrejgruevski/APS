@@ -1,8 +1,7 @@
-package SLL.zazd31;
-
-
+package SLL.zad33;
 
 import java.util.Scanner;
+
 class SLLNode<E> {
     protected E element;
     protected SLLNode<E> succ;
@@ -185,32 +184,29 @@ class SLL<E> {
     }
 }
 
-
-public class SeparateLists {
+public class DeleteNodes {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-
         SLL<Integer> lista = new SLL<>();
-        for (int i = 0; i<n; i++){
+
+        for (int i = 0; i < n; i++) {
             lista.insertLast(sc.nextInt());
         }
         SLLNode<Integer> iterator = lista.getFirst();
-        SLLNode<Integer> it2 = iterator.succ;
-        SLL<Integer> parni = new SLL<>();
-        SLL<Integer> neparni = new SLL<>();
-        while (iterator != null && it2 != null){
-            if (iterator.element %2==0 && it2.element %2==0){
-                parni.insertLast(it2.element);
-            }else if (iterator.element %2!=0 && it2.element %2!=0){
-                neparni.insertLast(it2.element);
+        int brojach=0;
+        int k = 1;
+        while (iterator != null) {
+            brojach++;
+            if (brojach == k){
+                lista.delete(iterator.succ);
+                brojach = 0;
+                k++;
             }
             iterator = iterator.succ;
-            it2 = it2.succ;
         }
-        System.out.println(parni);
-        System.out.println(neparni);
 
+        System.out.println(lista);
     }
 }
