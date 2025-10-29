@@ -201,6 +201,16 @@ public class MergeTwoSortedLists {
                 iterator2 = iterator2.succ;
             }
         }
+        while(iterator1 != null){
+            lista.insertLast(iterator1.element);
+            list1.delete(iterator1);
+            iterator1 = iterator1.succ;
+        }
+        while(iterator2 != null){
+            lista.insertLast(iterator2.element);
+            list2.delete(iterator2);
+            iterator2 = iterator2.succ;
+        }
     }
 
     public static void main(String[] args) {
