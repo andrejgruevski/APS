@@ -1,74 +1,5 @@
 package lab1.zad2;
 import java.util.Scanner;
-
-public class FindLastSameString {
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Input the number of elements in the list
-        int N = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
-
-        SLL<String> list = new SLL<>();
-
-        // Input the elements of the list
-        for (int i = 0; i < N; i++) {
-            String element = scanner.nextLine();
-            list.insertLast(element);
-        }
-
-        // Input the integer L
-        int L = scanner.nextInt(); // Read the integer L
-
-        // Output the original list
-        System.out.println(list);
-
-        // Move the last node with exactly L characters to the front
-        moveLastLToFront(list, L);
-
-        // Output the modified list
-        System.out.println(list);
-    }
-
-    public static void moveLastLToFront(SLL<String> list, int L) {
-        SLLNode<String> current = list.getFirst();
-        SLLNode<String> lastValidNode = null;
-
-        // Traverse the list to find the last node with exactly L characters
-        while (current != null) {
-            if (current.element.length() == L) {
-                lastValidNode = current; // Update lastValidNode
-            }
-            current = current.succ;
-        }
-
-        // If a valid node was found
-        if (lastValidNode != null) {
-            // Find the previous node to the lastValidNode
-            current = list.getFirst();
-            SLLNode<String> previous = null;
-
-            while (current != null && current != lastValidNode) {
-                previous = current;
-                current = current.succ;
-            }
-
-            // If lastValidNode is not the first node, we need to remove it
-            if (previous != null) {
-                previous.succ = lastValidNode.succ; // Remove lastValidNode from its current position
-            } else {
-                // If it is the first node, just delete it from the front
-                list.deleteFirst();
-            }
-
-            // Insert lastValidNode at the front of the list
-            list.insertFirst(lastValidNode.element);
-        }
-    }
-}
-
-// SLLNode class
 class SLLNode<E> {
     protected E element;
     protected SLLNode<E> succ;
@@ -79,11 +10,12 @@ class SLLNode<E> {
     }
 }
 
-// SLL class
+
 class SLL<E> {
     private SLLNode<E> first;
 
     public SLL() {
+        // Construct an empty SLL
         this.first = null;
     }
 
@@ -94,7 +26,7 @@ class SLL<E> {
     public int size() {
         int listSize = 0;
         SLLNode<E> tmp = first;
-        while (tmp != null) {
+        while(tmp != null) {
             listSize++;
             tmp = tmp.succ;
         }
@@ -103,24 +35,53 @@ class SLL<E> {
 
     @Override
     public String toString() {
-        StringBuilder ret = new StringBuilder();
+        String ret = new String();
         if (first != null) {
             SLLNode<E> tmp = first;
-            ret.append(tmp.element);
+            ret += tmp.element;
             while (tmp.succ != null) {
                 tmp = tmp.succ;
-                ret.append("->").append(tmp.element);
+                ret += "->" + tmp.element;
             }
-        } else {
-            ret.append("Prazna lista!!!"); // Empty list
-        }
-        return ret.toString();
+        } else
+            ret = "Prazna lista!!!";
+        return ret;
     }
 
     public void insertFirst(E o) {
-        SLLNode<E> ins = new SLLNode<>(o, null);
+        SLLNode<E> ins = new SLLNode<E>(o, null);
         ins.succ = first;
+        //SLLNode<E> ins = new SLLNode<E>(o, first);
         first = ins;
+    }
+
+    public void insertAfter(E o, SLLNode<E> node) {
+        if (node != null) {
+            SLLNode<E> ins = new SLLNode<E>(o, node.succ);
+            node.succ = ins;
+        } else {
+            System.out.println("Dadenot jazol e null");
+        }
+    }
+    public void insertBefore(E o, SLLNode<E> before) {
+
+        if (first != null) {
+            SLLNode<E> tmp = first;
+            if(first==before){
+                this.insertFirst(o);
+                return;
+            }
+            //ako first!=before
+            while (tmp.succ != before && tmp.succ!=null)
+                tmp = tmp.succ;
+            if (tmp.succ == before) {
+                tmp.succ = new SLLNode<E>(o, before);;
+            } else {
+                System.out.println("Elementot ne postoi vo listata");
+            }
+        } else {
+            System.out.println("Listata e prazna");
+        }
     }
 
     public void insertLast(E o) {
@@ -128,7 +89,7 @@ class SLL<E> {
             SLLNode<E> tmp = first;
             while (tmp.succ != null)
                 tmp = tmp.succ;
-            tmp.succ = new SLLNode<>(o, null);
+            tmp.succ = new SLLNode<E>(o, null);
         } else {
             insertFirst(o);
         }
@@ -140,12 +101,115 @@ class SLL<E> {
             first = first.succ;
             return tmp.element;
         } else {
-            System.out.println("Listata e prazna"); // The list is empty
+            System.out.println("Listata e prazna");
             return null;
         }
     }
 
+    public E delete(SLLNode<E> node) {
+        if (first != null) {
+            SLLNode<E> tmp = first;
+            if(first == node) {
+                return this.deleteFirst();
+            }
+            while (tmp.succ != node && tmp.succ.succ != null)
+                tmp = tmp.succ;
+            if (tmp.succ == node) {
+                tmp.succ = tmp.succ.succ;
+                return node.element;
+            } else {
+                System.out.println("Elementot ne postoi vo listata");
+                return null;
+            }
+        } else {
+            System.out.println("Listata e prazna");
+            return null;
+        }
+
+    }
+
     public SLLNode<E> getFirst() {
         return first;
+    }
+
+    public SLLNode<E> find(E o) {
+        if (first != null) {
+            SLLNode<E> tmp = first;
+            while (!tmp.element.equals(o) && tmp.succ != null)
+                tmp = tmp.succ;
+            if (tmp.element.equals(o)) {
+                return tmp;
+            } else {
+                System.out.println("Elementot ne postoi vo listata");
+            }
+        } else {
+            System.out.println("Listata e prazna");
+        }
+        return null;
+    }
+
+    public void merge (SLL<E> in){
+        if (first != null) {
+            SLLNode<E> tmp = first;
+            while(tmp.succ != null)
+                tmp = tmp.succ;
+            tmp.succ = in.getFirst();
+        }
+        else{
+            first = in.getFirst();
+        }
+    }
+
+    public void mirror() {
+        if (first != null) {
+            //m=nextsucc, p=tmp,q=next
+            SLLNode<E> tmp = first;
+            SLLNode<E> newsucc = null;
+            SLLNode<E> next;
+
+            while(tmp != null){
+                next = tmp.succ;
+                tmp.succ = newsucc;
+                newsucc = tmp;
+                tmp = next;
+            }
+            first = newsucc;
+        }
+    }
+}
+
+//Дадена е еднострана поврзана листа чии што јазли содржат по еден String. Дополнително, даден е и уште еден природен број L. Од дадената листа потребно е да се најде последниот јазел којшто содржи String со должина L и да се премести на почеток на листата.
+//Влез: Во првиот ред од влезот е даден бројот на елементи во листата - N, па во следните N редови се дадени самите елементи (String-ови) од листата. На крај, во последниот ред е даден бројот L.
+//Излез: На излез треба да се испечати листата пред и после промената.
+public class FindLastSameString {
+    public static void moveLastLToFront(SLL<String> list, int l) {
+        SLLNode<String> iterator =  list.getFirst();
+        SLLNode<String> tmp = iterator;
+
+        while (iterator !=null){
+            if (iterator.element.length() == l) {
+                tmp = iterator;
+                list.delete(iterator);
+                list.insertFirst(tmp.element);
+            }
+
+            iterator = iterator.succ;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        SLL<String> list = new SLL<>();
+
+        for (int i = 0; i < n; i++) {
+            list.insertLast(sc.next());
+        }
+
+        int l = sc.nextInt();
+        System.out.println(list);
+        moveLastLToFront(list,l);
+        System.out.println(list);
+
     }
 }
