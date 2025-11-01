@@ -189,10 +189,16 @@ public class FindLastSameString {
         while (iterator !=null){
             if (iterator.element.length() == l) {
                 tmp = iterator;
+
+            }
+            iterator = iterator.succ;
+        }
+        iterator = list.getFirst();
+        while (iterator!=null){
+            if (iterator.element.equals(tmp.element)) {
                 list.delete(iterator);
                 list.insertFirst(tmp.element);
             }
-
             iterator = iterator.succ;
         }
     }
