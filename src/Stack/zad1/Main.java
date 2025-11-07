@@ -1,4 +1,5 @@
 package Stack.zad1;
+
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -51,7 +52,7 @@ class ArrayStack<E> implements Stack<E> {
     }
 }
 
- interface Stack<E> {
+interface Stack<E> {
     // Elementi na stekot se objekti od proizvolen tip.
     // Metodi za pristap:
 
@@ -71,6 +72,7 @@ class ArrayStack<E> implements Stack<E> {
     public E pop();
     // Go otstranuva i vrakja elementot shto e na vrvot na stekot.
 }
+
 //Треба да се напише програма која ќе ја проверува балансираноста на следната секвенца ('(', ')', '{', '}', '[', ']')
 //
 //Секвенцата мора да содржи еднаков број на десни и леви загради ( '(', '{', '[' )
@@ -93,32 +95,30 @@ public class Main {
             if (c == '(') {
                 obichna++;
                 stack.push(c);
-            }else if (c == '{'){
+            } else if (c == '{') {
                 sredna++;
                 stack.push(c);
-            }else if (c == '['){
+            } else if (c == '[') {
                 golema++;
                 stack.push(c);
-            }
-
-            else if (c == ')'){
-                if (stack.isEmpty() || stack.pop() != '('){
+            } else if (c == ')') {
+                if (stack.isEmpty() || stack.pop() != '(') {
                     return 0;
                 }
-            }else if (c == '}'){
-                if (stack.isEmpty() || stack.pop() != '{'){
+            } else if (c == '}') {
+                if (stack.isEmpty() || stack.pop() != '{') {
                     return 0;
                 }
-            }else if (c == ']'){
-                if (stack.isEmpty() || stack.pop() != '['){
+            } else if (c == ']') {
+                if (stack.isEmpty() || stack.pop() != '[') {
                     return 0;
                 }
             }
         }
-        if (!stack.isEmpty()){
+        if (!stack.isEmpty()) {
             return 0;
         }
-        if (obichna == sredna && sredna == golema){
+        if (obichna == sredna && sredna == golema) {
             return 1;
         }
         return 0;
