@@ -176,8 +176,8 @@ class SLL<E> {
             first = newsucc;
         }
     }
-}
 
+}
 class Task {
     public int id;
     public int hours;
@@ -187,32 +187,101 @@ class Task {
         this.hours=hours;
         this.priority=priority;
     }
-}
-public class TaskSystem {
 
+    public String toString(){
+        return id +" " + hours +" "+ priority;
+    }
+    double importance(){
+        return 2 * hours * priority;
+    }
+}
+
+public class TaskSystem {
+    public static void work(SLL<Task> toDo, SLL<Task> inProgress){
+        SLLNode<Task> iterator1 = toDo.getFirst();
+        SLLNode<Task> iterator2 = inProgress.getFirst();
+
+        SLLNode<Task> najbiten = null;
+        SLLNode<Task> najNebiten = null;
+        while (iterator1 !=null){
+
+            if (iterator1.element.importance() > iterator1.succ.element.importance()){
+                najbiten = iterator1;
+            }
+            iterator1 = iterator1.succ;
+        }
+        while (iterator2!=null){
+            if (iterator2.element.importance() < iterator2.succ.element.importance()){
+                najNebiten =iterator2;
+            }
+            iterator2 = iterator2.succ;
+        }
+        iterator1 = toDo.getFirst();
+        iterator2 = inProgress.getFirst();
+
+        while (iterator1!=null){
+            if (iterator1.element.equals(najbiten.element)){
+                inProgress.insertFirst(iterator1.element);
+                toDo.delete(iterator1);
+            }
+            iterator1 = iterator1.succ;
+        }
+        while (iterator2!=null){
+            if (iterator2.element.equals(najNebiten.element)){
+                toDo.insertLast(iterator2.element);
+                inProgress.delete(iterator2);
+            }
+            iterator2 = iterator2.succ;
+        }
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int m = sc.nextInt();
 
-        SLL<Integer> toDo = new SLL<>();
-        SLL<Integer> inProgress = new SLL<>();
+        SLL<Task> toDo = new SLL<>();
+        SLL<Task> inProgress = new SLL<>();
 
         for (int i = 0; i < n; i++) {
-            String []line = sc.nextLine().trim().split(" ");
-            int id  = Integer.parseInt(line[0]);
-            int hours = Integer.parseInt(line[1]);
-            int priority = Integer.parseInt(line[2]);
-            toDo.insertLast(line);
+//            String []line = sc.nextLine().trim().split(" ");
+            int id  = sc.nextInt();
+            int hours = sc.nextInt();
+            int priority = sc.nextInt();
+            Task toDoTasks = new Task(id, hours, priority);
+            toDo.insertLast(toDoTasks);
         }
         for (int i = 0; i < m; i++) {
             int id = sc.nextInt();
             int hours = sc.nextInt();
             int priority = sc.nextInt();
             Task inProgressTask = new  Task(id, hours, priority);
+            inProgress.insertLast(inProgressTask);
         }
-        System.out.println(toDo);
+
+
+        SLLNode<Task> curr = toDo.getFirst();
+        while (curr != null) {
+            System.out.print(curr.element.id);
+            if (curr.succ != null) System.out.print(" ");
+            curr = curr.succ;
+        }
+        System.out.println();
+
+        curr = inProgress.getFirst();
+        while (curr != null) {
+            System.out.print(curr.element.id);
+            if (curr.succ != null) System.out.print(" ");
+            curr = curr.succ;
+        }
+        System.out.println();
     }
 
-
+//3
+//3
+//111 1 1
+//222 2 4
+//333 1 1
+//444 2 7
+//555 4 6
+//666 2 9
 }
