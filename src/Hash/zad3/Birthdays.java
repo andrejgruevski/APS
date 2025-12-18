@@ -113,31 +113,36 @@ class CBHT<K extends Comparable<K>, E> {
         return temp;
     }
 }
-
+//Во заводот на статистика се прави ново истражување каде што се открива броjот
+//на лу´ге родени во секоj месец. Ваша задача е за даден месец да прикажете колку
+//лу´ге се родени во тоj месец.
+//Влез: Во првиот ред од влезот е даден броjот на лу´ге 𝑁, а во секоj нареден
+//ред е даден датумот на ра´гање. Во последниот ред е даден месецот за коj треба
+//да се прикаже броjот на лу´ге родени во тоj месец.
+//        Излез: Броj на лу´ге кои се родени во тоj месец. Доколку нема лу´ге родени
+//во тоj месец да се испечати „Empty”
 public class Birthdays {
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+        CBHT<String, Integer> table = new CBHT<>(23);
 
-        int N = Integer.parseInt(br.readLine());
+        for (int i =0; i<n; i++) {
+            String parts [] = sc.nextLine().split("\\.");
 
-
-        CBHT<String, Integer> birthdays = new CBHT<>(23);
-
-        for (int i = 0; i<N; i++){
-            String[] parts = br.readLine().trim().split("\\.");
-
-            if (birthdays.search(parts[1])==null) {
-                birthdays.insert(parts[1], 1);
+            if (table.search(parts[1])==null) {
+                table.insert(parts[1],1);
             }else{
-                SLLNode<MapEntry<String,Integer>> bd = birthdays.search(parts[1]);
-
-                birthdays.insert(parts[1],bd.element.value +1);
+                SLLNode<MapEntry<String, Integer>> br = table.search(parts[1]);
+                table.insert(parts[1], br.element.value+1);
             }
         }
-        String month = br.readLine();
-        SLLNode<MapEntry<String,Integer>> result = birthdays.search(month);
-        if (result == null) {
+
+        String month = sc.next();
+        SLLNode<MapEntry<String, Integer>> result = table.search(month);
+        if (result == null){
             System.out.println("Empty");
         }else{
             System.out.println(result.element.value);
