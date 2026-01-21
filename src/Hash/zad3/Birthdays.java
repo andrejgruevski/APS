@@ -133,10 +133,10 @@ public class Birthdays {
             String parts [] = sc.nextLine().split("\\.");
 
             if (table.search(parts[1])==null) {
-                table.insert(parts[1],1);
+                table.insert(parts[1], Integer.valueOf(1));
             }else{
                 SLLNode<MapEntry<String, Integer>> br = table.search(parts[1]);
-                table.insert(parts[1], br.element.value+1);
+                table.insert(parts[1], Integer.valueOf(br.element.value+1));
             }
         }
 
