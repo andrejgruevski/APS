@@ -28,7 +28,7 @@ class SLL<E> {
     public int size() {
         int listSize = 0;
         SLLNode<E> tmp = first;
-        while(tmp != null) {
+        while (tmp != null) {
             listSize++;
             tmp = tmp.succ;
         }
@@ -65,19 +65,21 @@ class SLL<E> {
             System.out.println("Dadenot jazol e null");
         }
     }
+
     public void insertBefore(E o, SLLNode<E> before) {
 
         if (first != null) {
             SLLNode<E> tmp = first;
-            if(first==before){
+            if (first == before) {
                 this.insertFirst(o);
                 return;
             }
             //ako first!=before
-            while (tmp.succ != before && tmp.succ!=null)
+            while (tmp.succ != before && tmp.succ != null)
                 tmp = tmp.succ;
             if (tmp.succ == before) {
-                tmp.succ = new SLLNode<E>(o, before);;
+                tmp.succ = new SLLNode<E>(o, before);
+                ;
             } else {
                 System.out.println("Elementot ne postoi vo listata");
             }
@@ -111,7 +113,7 @@ class SLL<E> {
     public E delete(SLLNode<E> node) {
         if (first != null) {
             SLLNode<E> tmp = first;
-            if(first == node) {
+            if (first == node) {
                 return this.deleteFirst();
             }
             while (tmp.succ != node && tmp.succ.succ != null)
@@ -150,14 +152,13 @@ class SLL<E> {
         return null;
     }
 
-    public void merge (SLL<E> in){
+    public void merge(SLL<E> in) {
         if (first != null) {
             SLLNode<E> tmp = first;
-            while(tmp.succ != null)
+            while (tmp.succ != null)
                 tmp = tmp.succ;
             tmp.succ = in.getFirst();
-        }
-        else{
+        } else {
             first = in.getFirst();
         }
     }
@@ -169,7 +170,7 @@ class SLL<E> {
             SLLNode<E> newsucc = null;
             SLLNode<E> next;
 
-            while(tmp != null){
+            while (tmp != null) {
                 next = tmp.succ;
                 tmp.succ = newsucc;
                 newsucc = tmp;
@@ -179,45 +180,47 @@ class SLL<E> {
         }
     }
 }
+
 public class MiddleoftheLinkedList {
-    public static void solution (SLL<Integer> list){
+    public static void solution(SLL<Integer> list) {
         SLLNode<Integer> iterator = list.getFirst();
         SLLNode<Integer> middleNode = list.getFirst();
         int counter = 0;
-        while (iterator !=null){
+        while (iterator != null) {
             counter++;
             iterator = iterator.succ;
         }
         iterator = list.getFirst();
-        int target = (counter+1)/2;
+        int target = (counter + 1) / 2;
 
-        if (counter % 2 != 0){
+        if (counter % 2 != 0) {
             int tmp = 0;
-            while (iterator !=null){
+            while (iterator != null) {
                 tmp++;
-                if (tmp == target){
+                if (tmp == target) {
                     middleNode = iterator;
                 }
                 iterator = iterator.succ;
             }
-        }else{
+        } else {
             int tmp = 0;
-            while (iterator !=null){
+            while (iterator != null) {
                 tmp++;
-                if (tmp == target){
+                if (tmp == target) {
                     middleNode = iterator.succ;
                 }
                 iterator = iterator.succ;
             }
         }
-        System.out.println("Middle element  "+middleNode.element);
+        System.out.println("Middle element  " + middleNode.element);
 
-        while (middleNode != null){
-            System.out.print(middleNode.element+" ");
+        while (middleNode != null) {
+            System.out.print(middleNode.element + " ");
             middleNode = middleNode.succ;
         }
 
     }
+
     static void main() {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
