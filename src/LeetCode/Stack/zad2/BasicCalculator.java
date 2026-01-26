@@ -24,6 +24,7 @@ public class BasicCalculator {
                     stack.push(-num);
                 } else if (sign == '*') {
                     stack.push(stack.pop() * num);
+
                 } else if (sign == '/') {
                     stack.push(stack.pop() / num);
                 }

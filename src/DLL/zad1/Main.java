@@ -204,7 +204,6 @@ class DLL<E> {
 //        Излез:
 //
 //        Еден број што е производот на сумите од низите. Со седум децимали.
-
 public class Main {
     public static long magichenBroj (DLL<DLL<Integer>> list){
         DLLNode<DLL<Integer>> mainNode = list.getFirst();
