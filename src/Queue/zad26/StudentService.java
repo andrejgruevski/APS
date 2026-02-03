@@ -64,31 +64,33 @@ public class StudentService {
         }
 
         int counter = 0;
-        while (!semester.isEmpty() && counter < 2) {
-            Student student = semester.remove();
-            student.sme = 0;
-            if (student.index == 1) {
-                gettingIndex.add(student);
-            } else if (student.fS == 1) {
-                ftStudent.add(student);
-            } else {
+        while (!semester.isEmpty() || !gettingIndex.isEmpty() || !ftStudent.isEmpty()) {
+
+            for (int i = 0; i < 2 && !semester.isEmpty(); i++) {
+                Student student = semester.remove();
+                student.sme = 0;
+                if (student.index == 1) {
+                    gettingIndex.add(student);
+                } else if (student.fS == 1) {
+                    ftStudent.add(student);
+                } else {
+                    System.out.println(student.fullName);
+                }
+            }
+            if (!gettingIndex.isEmpty()) {
+                Student student = gettingIndex.remove();
+                student.index = 0;
+                if (student.fS == 1) {
+                    ftStudent.add(student);
+                } else {
+                    System.out.println(student.fullName);
+                }
+            }
+            if (!ftStudent.isEmpty()) {
+                Student student = ftStudent.remove();
+                student.fS = 0;
                 System.out.println(student.fullName);
             }
-            counter++;
-        }
-        while (!gettingIndex.isEmpty()) {
-            Student student = gettingIndex.remove();
-            student.index = 0;
-            if (student.fS == 1) {
-                ftStudent.add(student);
-            } else {
-                System.out.println(student.fullName);
-            }
-        }
-        while (!ftStudent.isEmpty()) {
-            Student student = ftStudent.remove();
-            student.fS = 0;
-            System.out.println(student.fullName);
         }
 
 
