@@ -1,5 +1,6 @@
-package FinkiBook.SLL;
+package FinkiBook.SLL.ReorderLIst;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 class SLLNode<E> {
@@ -28,7 +29,7 @@ class SLL<E> {
     public int size() {
         int listSize = 0;
         SLLNode<E> tmp = first;
-        while(tmp != null) {
+        while (tmp != null) {
             listSize++;
             tmp = tmp.succ;
         }
@@ -65,19 +66,21 @@ class SLL<E> {
             System.out.println("Dadenot jazol e null");
         }
     }
+
     public void insertBefore(E o, SLLNode<E> before) {
 
         if (first != null) {
             SLLNode<E> tmp = first;
-            if(first==before){
+            if (first == before) {
                 this.insertFirst(o);
                 return;
             }
             //ako first!=before
-            while (tmp.succ != before && tmp.succ!=null)
+            while (tmp.succ != before && tmp.succ != null)
                 tmp = tmp.succ;
             if (tmp.succ == before) {
-                tmp.succ = new SLLNode<E>(o, before);;
+                tmp.succ = new SLLNode<E>(o, before);
+                ;
             } else {
                 System.out.println("Elementot ne postoi vo listata");
             }
@@ -111,7 +114,7 @@ class SLL<E> {
     public E delete(SLLNode<E> node) {
         if (first != null) {
             SLLNode<E> tmp = first;
-            if(first == node) {
+            if (first == node) {
                 return this.deleteFirst();
             }
             while (tmp.succ != node && tmp.succ.succ != null)
@@ -150,14 +153,13 @@ class SLL<E> {
         return null;
     }
 
-    public void merge (SLL<E> in){
+    public void merge(SLL<E> in) {
         if (first != null) {
             SLLNode<E> tmp = first;
-            while(tmp.succ != null)
+            while (tmp.succ != null)
                 tmp = tmp.succ;
             tmp.succ = in.getFirst();
-        }
-        else{
+        } else {
             first = in.getFirst();
         }
     }
@@ -169,7 +171,7 @@ class SLL<E> {
             SLLNode<E> newsucc = null;
             SLLNode<E> next;
 
-            while(tmp != null){
+            while (tmp != null) {
                 next = tmp.succ;
                 tmp.succ = newsucc;
                 newsucc = tmp;
@@ -180,45 +182,55 @@ class SLL<E> {
     }
 }
 
-public class JoinSortedList {
-    public static void sortList(SLL<Integer> list, SLL<Integer> list2){
-        SLLNode<Integer> iterator = list.getFirst();
-        SLLNode<Integer> iterator2 = list2.getFirst();
+//Дадена е еднострано поврзана листа 𝐿0 → 𝐿1 → . . . → 𝐿𝑛−1 → 𝐿𝑛. Преуредете
+//ги jазлите во листата така што новата листа ´ке биде : 𝐿0 → 𝐿𝑛 → 𝐿1 → 𝐿𝑛−1 →
+//𝐿2 → 𝐿𝑛−2...
+//Влез: Во првата линиjа е даден броjот на елементи n. Во втората линиjа се
+//даваат броевите во листата одделени со празно место.
+public class ReorderList {
 
-        SLL<Integer> result = new SLL<>();
-        while (iterator !=null && iterator2 != null){
-            if (iterator.element < iterator2.element){
-                result.insertLast(iterator.element);
-                iterator = iterator.succ;
-            }else{
-                result.insertLast(iterator2.element);
-                iterator2 = iterator2.succ;
+    public static void transform(SLL<Integer> list) {
+
+        if (list.getFirst() == null || list.getFirst().succ == null) {
+            return;
+        }
+        SLLNode<Integer> iterator = list.getFirst();
+        SLL<Integer> tempList = new SLL<>();
+
+        while (iterator != null) {
+
+            tempList.insertLast(iterator.element);
+
+            SLLNode<Integer> prev = null;
+            SLLNode<Integer> last = iterator;
+
+            //There is the last element of SLL, we just keep every time the last el and keep updating
+            while (last.succ != null) {
+                prev = last;
+                last = last.succ;
             }
 
-        }
-        while (iterator != null){
-            result.insertLast(iterator.element);
+            tempList.insertLast(last.element);
+
+            // we update the previous element
+            if (prev != null) {
+                prev.succ = null;
+            }
+
             iterator = iterator.succ;
         }
-        while (iterator2 != null){
-            result.insertLast(iterator2.element);
-            iterator2 = iterator2.succ;
+        System.out.println(tempList);
 
-        }
-        System.out.println("New list is: "+ result);
     }
-    public static  void main(String[] args) {
+
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         SLL<Integer> list = new SLL<>();
-        SLL<Integer> list2 = new SLL<>();
         for (int i = 0; i < n; i++) {
             list.insertLast(sc.nextInt());
         }
-        int m = sc.nextInt();
-        for (int i = 0; i < m; i++) {
-            list2.insertLast(sc.nextInt());
-        }
-       sortList(list, list2);
+
+        transform(list);
     }
 }
