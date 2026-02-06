@@ -1,4 +1,4 @@
-package FinkiBook.DLL.Palindrome.DivideByPairs;
+package FinkiBook.DLL.ListOfLists;
 
 import java.util.Scanner;
 
@@ -192,54 +192,33 @@ class DLL<E> {
         }
     }
 }
-//Дадена е двострано поврзана листа чии што jазли содржат по еден природен
-//броj. Листата треба да се подели на две резултантни листи, т.ш. во првата резултанта листа ´ке бидат бидат сместени jазли од влезната листа кои содржат парни
-//броеви, а во втората – непарните. Jазлите во резултантните листи се додаваат
-//наизменично почнуваj´ки од почетокот и краjот на влезната листа (т.е. прво се
-//разгледува првиот елемент од листата и се додава во соодветната резултантна
-//        листа, па последниот, па вториот итн...)
-public class DividePairs {
-    public static void pairs(DLL<Integer> list){
-        DLLNode<Integer> first = list.getFirst();
-        DLLNode<Integer> last = list.getLast();
-
-        DLL<Integer> even = new DLL<>();
-        DLL<Integer> odd = new DLL<>();
-        // first != last for odd N in list, last.succ != first for even N in list
-        while (first != last &&  last.succ != first) {
-            if (first.element%2 == 0){
-                even.insertLast(first.element);
-            }else{
-                odd.insertLast(first.element);
-            }
-            if (last.element%2 == 0){
-                even.insertLast(last.element);
-            }else {
-                odd.insertLast(last.element);
-            }
-            first = first.succ;
-            last = last.pred;
+public class ListOfLists {
+    public static int sum(DLL<Integer> list){
+        int sum = 0;
+        DLLNode<Integer> head = list.getFirst();
+        while (head != null) {
+            sum += head.element;
+            head = head.succ;
         }
-
-        // we put the last number here
-        if (first == last) {
-            if (first.element%2 == 0){
-                even.insertLast(first.element);
-            }else {
-                odd.insertLast(first.element);
-            }
-        }
-        System.out.println("Even List: "+even);
-        System.out.println("Odd List: "+odd);
+        return sum;
     }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
-        DLL<Integer> list = new DLL<>();
+        DLL<DLL<Integer>> list = new DLL<>();
+        int m = sc.nextInt();
+        int result = 1;
         for (int i = 0; i < n; i++) {
-            list.insertLast(sc.nextInt());
+
+            DLL<Integer> lists = new DLL<>();
+            for (int j =0; j<m; j ++){
+                lists.insertLast(sc.nextInt());
+            }
+            result *=sum(lists);
+            System.out.println(sum(lists));
+            list.insertLast(lists);
         }
-        pairs(list);
+        System.out.println(result);
 
     }
 }
